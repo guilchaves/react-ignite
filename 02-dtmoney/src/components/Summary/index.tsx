@@ -4,6 +4,7 @@ import outcomeImg from '../../assets/outcome.svg'
 import totalImg from '../../assets/total.svg'
 import { TransactionsContext } from "../../TransactionsContext";
 import { useContext } from "react";
+import { convertCurrencyToBRL } from "../../utils/currencyConversor";
 
 export function Summary() {
     const { transactions } = useContext(TransactionsContext)
@@ -31,21 +32,21 @@ export function Summary() {
                     <p>Entradas</p>
                     <img src={incomeImg} alt="Entradas" />
                 </header>
-                <strong>{summary.deposits}</strong>
+                <strong>{convertCurrencyToBRL(summary.deposits)}</strong>
             </div>
             <div>
                 <header>
                     <p>Saídas</p>
                     <img src={outcomeImg} alt="Saídas" />
                 </header>
-                <strong>-{summary.withdraws}</strong>
+                <strong>-{convertCurrencyToBRL(summary.withdraws)}</strong>
             </div>
             <div className="highlight-background">
                 <header>
                     <p>Total</p>
                     <img src={totalImg} alt="Total" />
                 </header>
-                <strong>{summary.total}</strong>
+                <strong>{convertCurrencyToBRL(summary.total)}</strong>
             </div>
         </Container>
     )
