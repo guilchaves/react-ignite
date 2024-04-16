@@ -20,6 +20,18 @@ export function TransactionsTable() {
             .then(res => setTransactions(res.data.transactions))
     }, []);
 
+    function convertDateTime(date: Date) {
+        return new Intl.DateTimeFormat('pt-BR').format(date);
+    }
+
+    function convertToBRLCurrency(amount: number) {
+        const convertedAmount = new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL'
+        }).format(amount)
+        return convertedAmount
+    }
+
     return (
         <Container>
             <table>
@@ -36,18 +48,10 @@ export function TransactionsTable() {
                         <tr key={transaction.id}>
                             <td>{transaction.title}</td>
                             <td className={transaction.type}>
-                                {new Intl.NumberFormat('pt-BR', {
-                                    style: 'currency',
-                                    currency: 'BRL'
-                                }).format(transaction.amount)}
+                                {convertToBRLCurrency(transaction.amount)}
                             </td>
                             <td>{transaction.category}</td>
-                            <td>
-                                {
-                                    new Intl.DateTimeFormat('pt-BR')
-                                        .format(new Date(transaction.createdAt))
-                                }
-                            </td>
+                            <td>{convertDateTime(new Date(transaction.createdAt))}</td>
                         </tr>
                     )
                     )}
